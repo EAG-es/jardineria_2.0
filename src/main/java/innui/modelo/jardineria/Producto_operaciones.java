@@ -48,6 +48,7 @@ public class Producto_operaciones {
         boolean es_con_filtro = false;
         boolean es_con_ordenacion_ascendente = false;
         boolean es_con_ordenacion_descendente = false;
+        String filtro_like = "";
         try {
             LinkedList_Producto linkedList_Producto = new LinkedList_Producto();
             if (paginacion_busquedas_ordenaciones_modelo.filtro != null
@@ -59,14 +60,59 @@ public class Producto_operaciones {
             } else if (paginacion_busquedas_ordenaciones_modelo.orden_descendente != null) {
                 es_con_ordenacion_descendente = true;
             }
-            if (es_con_filtro == false
-                    && es_con_ordenacion_ascendente == false
-                    && es_con_ordenacion_descendente == false) {
-                linkedList_Producto = producto.findRange_JSON(linkedList_Producto.getClass()
-                        , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
-                        , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
-                            + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
-                        , usuario, contraseña, error); 
+            if (es_con_filtro == false) {
+                if (es_con_ordenacion_ascendente) {
+                    linkedList_Producto = producto.find_orden_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , paginacion_busquedas_ordenaciones_modelo.orden_ascendente
+                            , "asc"
+                            , usuario, contraseña, error);                     
+                } else if (es_con_ordenacion_descendente) {
+                    linkedList_Producto = producto.find_orden_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , paginacion_busquedas_ordenaciones_modelo.orden_descendente
+                            , "desc"
+                            , usuario, contraseña, error);                     
+                } else {
+                    linkedList_Producto = producto.findRange_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , usuario, contraseña, error); 
+                }
+                ret = (linkedList_Producto != null);
+            } else {
+                filtro_like = "%" + paginacion_busquedas_ordenaciones_modelo.filtro + "%";
+                if (es_con_ordenacion_ascendente) {
+                    linkedList_Producto = producto.findLike_descripcion_orden_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , filtro_like
+                            , paginacion_busquedas_ordenaciones_modelo.orden_ascendente
+                            , "asc"
+                            , usuario, contraseña, error);                     
+                } else if (es_con_ordenacion_descendente) {
+                    linkedList_Producto = producto.findLike_descripcion_orden_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , filtro_like
+                            , paginacion_busquedas_ordenaciones_modelo.orden_descendente
+                            , "desc"
+                            , usuario, contraseña, error);                     
+                } else {
+                    linkedList_Producto = producto.findLike_descripcion_JSON(linkedList_Producto.getClass()
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num)
+                            , String.valueOf(paginacion_busquedas_ordenaciones_modelo.pagina_fila_inicio_num 
+                                + paginacion_busquedas_ordenaciones_modelo.pagina_tam - 1)
+                            , filtro_like
+                            , usuario, contraseña, error); 
+                }
                 ret = (linkedList_Producto != null);
             }
             if (ret) {
