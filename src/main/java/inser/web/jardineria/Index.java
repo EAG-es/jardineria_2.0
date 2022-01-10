@@ -28,6 +28,7 @@ import jakarta.servlet.jsp.JspWriter;
 public class Index extends Controladores_vistas implements Serializable {
     public static String jdbc_usuario_tex = "jdbc_usuario";
     public static String jdbc_clave_tex = "jdbc_clave";    
+    public static String jdbc_restful_url_tex = "jdbc_restful_url";    
     public int serverPort_https = 8443;
     public HttpServletRequest httpServletRequest;
     public HttpServletResponse httpServletResponse;

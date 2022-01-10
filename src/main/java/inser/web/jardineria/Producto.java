@@ -53,7 +53,6 @@ public class Producto extends Index {
     }
     
     public Producto() {
-        producto_operaciones = new Producto_operaciones();
         paginacion_busquedas_ordenaciones = new Paginacion_busquedas_ordenaciones();
         paginacion_busquedas_ordenaciones.pagina_tam = pagina_tam;
     }
@@ -64,6 +63,8 @@ public class Producto extends Index {
     public boolean configurar_contexto() {
         String [] error = { "" }; //NOI18N
         if (error_ret) {
+           String restful_url = httpServletRequest.getServletContext().getInitParameter(jdbc_restful_url_tex);
+           producto_operaciones = new Producto_operaciones(restful_url);
            producto_operaciones.usuario = httpServletRequest.getServletContext().getInitParameter(jdbc_usuario_tex);
            producto_operaciones.contraseña = httpServletRequest.getServletContext().getInitParameter(jdbc_clave_tex);
         }

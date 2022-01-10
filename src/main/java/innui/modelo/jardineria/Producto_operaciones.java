@@ -18,7 +18,15 @@ import java.util.logging.Logger;
 public class Producto_operaciones {
     public String usuario;
     public String contraseña;
-    public incli.restful.restful_crud_cliente.rest.Producto producto = new incli.restful.restful_crud_cliente.rest.Producto ();
+    public incli.restful.restful_crud_cliente.rest.Producto producto;
+    
+    public Producto_operaciones() {
+        producto = new incli.restful.restful_crud_cliente.rest.Producto ();
+    }
+    
+    public Producto_operaciones(String uri_base) {
+        producto = new incli.restful.restful_crud_cliente.rest.Producto (uri_base);
+    }
     
     public long contar_filas(String [] error) {
         Long retorno = -1L;
